@@ -2,10 +2,10 @@ import { url } from '../utils/constants'
 import Axios from 'axios'
 // import { checkStatus, handleError } from './handler'
 
-export default (payload, path, requestType, contentType, auth, params, id) => {
+export default (payload, path, requestType, contentType, auth, params = {}, id) => {
 	console.log('apicaller', payload, path, requestType, contentType, auth, params, id)
 	const authHeaders = auth ? {
-		'Authorization' : 'Token '+ localStorage.token
+		'Authorization': 'Token ' + localStorage.token
 	} : {}
 	switch (requestType) {
 		case 'post':
@@ -39,6 +39,13 @@ export default (payload, path, requestType, contentType, auth, params, id) => {
 					...authHeaders,
 				}
 			}).then(res => res)
+		case 'delete':
+			return Axios.delete(`${url}${path}${id}/`, {
+				headers: {
+					'content-type': contentType,
+					...authHeaders,
+				}
+			}).then(res => res)
 		case 'list':
 		default:
 			return Axios.get(`${url}${path}`, {
@@ -48,8 +55,8 @@ export default (payload, path, requestType, contentType, auth, params, id) => {
 				},
 				params: Object.fromEntries(
 					Object.entries(params).map(([key, value]) => [
-					key,
-					Array.isArray(value) ? value.join(',') : value,
+						key,
+						Array.isArray(value) ? value.join(',') : value,
 					])
 				)
 			}).then(res => res)

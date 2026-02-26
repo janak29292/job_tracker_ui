@@ -1,36 +1,36 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
-import { JOB_STATUS } from "../../utils/constants";
+import { JOB_STATUS, JOB_STATUS_EXCLUDE } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 function JobFilter() {
     const dispatch = useDispatch()
     const techStackList = useSelector(state => state.techStackList)
-    const {jobFilters, setJobFilters} = useAppContext()
-    const[filters, setFilters] = useState(jobFilters)
-    const[stacks, setStacks] = useState([])
+    const { jobFilters, setJobFilters } = useAppContext()
+    const [filters, setFilters] = useState(jobFilters)
+    const [stacks, setStacks] = useState([])
 
 
     const addFilter = (key, value) => {
         console.log(key, value)
-        setFilters({...filters, ...{[key]: value}})
+        setFilters({ ...filters, ...{ [key]: value } })
         // tech_stacks: selectedStack
     }
 
     const addFilterList = (key, value) => {
-        if (key in filters && Array.isArray(filters[key])){
-            const updatedFilter = {[key]: [...filters[key], value]}
-            setFilters({...filters, ...updatedFilter})
+        if (key in filters && Array.isArray(filters[key])) {
+            const updatedFilter = { [key]: [...filters[key], value] }
+            setFilters({ ...filters, ...updatedFilter })
         } else {
-            const updatedFilter = {[key]: [value]}
-            setFilters({...filters, ...updatedFilter})
+            const updatedFilter = { [key]: [value] }
+            setFilters({ ...filters, ...updatedFilter })
         }
     }
 
     const removeFilterList = (key, value) => {
-        const updatedFilter = {[key]: filters[key].filter(item => item != value)}
-        setFilters({...filters, ...updatedFilter})
+        const updatedFilter = { [key]: filters[key].filter(item => item != value) }
+        setFilters({ ...filters, ...updatedFilter })
     }
 
     const applyFilters = () => {
@@ -40,15 +40,17 @@ function JobFilter() {
     const resetFilters = () => {
         console.log("RESETTING")
         const currentFilters = {
-            status__not__in: ['IG', 'RE', 'OR']
+            status__not__in: JOB_STATUS_EXCLUDE,
+            ordering: '-last_posted'
         }
         setFilters(currentFilters)
+        setJobFilters(currentFilters)
     }
 
     const getTechStackList = (techName) => {
         dispatch({
             type: 'GET_TECHSTACK_LIST',
-            params: {name__icontains: techName}
+            params: { name__icontains: techName }
         });
         // setLoading(true);
     };
@@ -60,7 +62,7 @@ function JobFilter() {
         } else if (techStackList?.changingStatus !== 'ongoing') {
             if (techStackList?.changingStatus === 'netFailed') {
                 toast.error(techStackList.data.message);
-            } else if (techStackList?.changingStatus === 'failed'){
+            } else if (techStackList?.changingStatus === 'failed') {
                 console.log(techStackList)
                 toast.error(techStackList?.changingStatus);
             }
@@ -70,18 +72,19 @@ function JobFilter() {
 
     // console.log()
     useEffect(() => {
-        if (Object.keys(jobFilters).length === 0){
+        if (Object.keys(jobFilters).length === 0) {
             const currentFilters = {
-                status__not__in: ['IG', 'RE', 'OR']
+                status__not__in: JOB_STATUS_EXCLUDE,
+                ordering: '-last_posted'
             }
-            setFilters({...filters, ...currentFilters})
+            setFilters({ ...filters, ...currentFilters })
             setJobFilters(currentFilters)
         }
     }, []);
 
 
 
-    return(
+    return (
 
         <div className="container">
 
@@ -116,7 +119,7 @@ function JobFilter() {
                             <div class="tech-stack-container">
                                 {filters.tech_stacks?.map((item, index) => (
                                     <span class="badge bg-primary selected-tech">
-                                        {item} <i class="bi bi-x-circle ms-1" onClick={() => removeFilterList('tech_stacks', item)} style={{cursor: 'pointer'}}></i>
+                                        {item} <i class="bi bi-x-circle ms-1" onClick={() => removeFilterList('tech_stacks', item)} style={{ cursor: 'pointer' }}></i>
                                     </span>
                                 ))}
                             </div>
@@ -132,7 +135,7 @@ function JobFilter() {
                                 <div class="dropdown-menu status-dropdown">
                                     {Object.keys(JOB_STATUS).filter(item => !filters.status__in?.includes(item)).map((item, index) => (
                                         <div class="status-dropdown-item">
-                                            <span  onClick={() => addFilterList('status__in', item)} class={`badge bg-${JOB_STATUS[item].bgColor}`}>{JOB_STATUS[item].text}</span>
+                                            <span onClick={() => addFilterList('status__in', item)} class={`badge bg-${JOB_STATUS[item].bgColor}`}>{JOB_STATUS[item].text}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -140,7 +143,7 @@ function JobFilter() {
                             <div class="selected-statuses-container">
                                 {filters.status__in?.map((item, index) => (
                                     <span class="badge bg-success selected-tech">
-                                        {JOB_STATUS[item].text} <i onClick={() => removeFilterList('status__in', item)} class="bi bi-x-circle ms-1" style={{cursor: 'pointer'}}></i>
+                                        {JOB_STATUS[item].text} <i onClick={() => removeFilterList('status__in', item)} class="bi bi-x-circle ms-1" style={{ cursor: 'pointer' }}></i>
                                     </span>
                                 ))}
                             </div>
@@ -164,7 +167,7 @@ function JobFilter() {
                             <div class="selected-statuses-container">
                                 {filters.status__not__in?.map((item, index) => (
                                     <span class="badge bg-danger selected-tech">
-                                        {JOB_STATUS[item].text} <i onClick={() => removeFilterList('status__not__in', item)} class="bi bi-x-circle ms-1" style={{cursor: 'pointer'}}></i>
+                                        {JOB_STATUS[item].text} <i onClick={() => removeFilterList('status__not__in', item)} class="bi bi-x-circle ms-1" style={{ cursor: 'pointer' }}></i>
                                     </span>
                                 ))}
                             </div>
@@ -187,7 +190,7 @@ function JobFilter() {
 
                         <div>
                             <label class="form-label fw-semibold">Sort By</label>
-                            <select class="form-select"  onChange={e => addFilter('ordering', e.target.value)}>
+                            <select class="form-select" value={filters.ordering || ''} onChange={e => addFilter('ordering', e.target.value)}>
                                 <option value="id" >ID - ascending</option>
                                 <option value="-id" >ID - descending</option>
                                 <option value="company" >Company - ascending</option>

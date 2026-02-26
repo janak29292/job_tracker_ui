@@ -11,13 +11,13 @@ export const JOB_STATUS = {
         text:"Not Applied",
         bgColor:"warning",
         color:"dark",
-        options:['NA', 'AF', 'CR', 'IS', 'RP', 'NE', 'RE', 'OR']
+        options:['NA', 'AF', 'CR', 'IS', 'RP', 'NE', 'RE', 'OR', 'AC']
     },
     AF: {
         text:"Applied",
         bgColor:"info",
         color:"dark",
-        options:['AF', 'CR', 'IS', 'RP', 'NE', 'RE', 'OR']
+        options:['AF', 'CR', 'IS', 'RP', 'NE', 'RE', 'OR', 'AC']
     },
     CR: {
         text:"Call Received",
@@ -35,7 +35,7 @@ export const JOB_STATUS = {
         text:"Response Pending",
         bgColor:"primary",
         color:"light",
-        options:['CR', 'IS', 'RP', 'NE', 'RE', 'OR']
+        options:['CR', 'IS', 'RP', 'NE', 'RE', 'OR', 'AC']
     },
     NE: {
         text:"Negotiating",
@@ -47,12 +47,19 @@ export const JOB_STATUS = {
         text:"Rejected",
         bgColor:"danger",
         color:"light",
-        options:['RE',]
+        options:['RE', "NA"]
     },
     OR: {
         text:"Offer Received",
         bgColor:"success",
         color:"light",
         options:['NE', 'OR']
+    },
+    AC: {
+        text: "Application Closed",
+        bgColor: "danger",
+        color: "light",
+        options: ["AC", "NA"]
     }
 }
+export const JOB_STATUS_EXCLUDE = ['IG', 'RE', 'OR', 'AC']
