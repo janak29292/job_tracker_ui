@@ -65,7 +65,16 @@ function JobCard(props) {
                     <div class="job-header-content">
                         <div class="row align-items-center w-100">
                             <div class="col-lg-3 col-md-6 mb-2 mb-lg-0">
-                                <h5 class="mb-1">{job.company}</h5>
+                                <h5 class="mb-1 d-flex align-items-center gap-2">
+                                    {job.platform === 'LI' && (
+                                        <i className="bi bi-linkedin text-primary" style={{ fontSize: '1rem' }} title="LinkedIn"></i>
+                                    )}
+                                    {job.platform === 'NI' && (
+                                        <img src="/naukri_favicon.ico" alt="Naukri" title="Naukri"
+                                            style={{ width: '18px', height: '18px', flexShrink: 0 }} />
+                                    )}
+                                    {job.company}
+                                </h5>
                                 <p class="text-muted mb-0 small">{job.position}</p>
                             </div>
                             <div class="col-lg-3 col-md-6 mb-2 mb-lg-0">

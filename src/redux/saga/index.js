@@ -9,14 +9,15 @@ export default function* rootSaga() {
     SAGA('PATCH_JOB', takeLatest, 'patch', 'job/jobs/', 'application/json')(),
     SAGA('GET_TECHSTACK_LIST', takeLatest, 'list', 'job/techs/', 'application/json')(),
     SAGA('GET_POSTING_LIST', takeLatest, 'list', 'job/postings/', 'application/json')(),
-    SAGA('GET_DAILY_JOB_COUNT', takeLatest, 'list', 'job/daily-count/', 'application/json')(),
+    SAGA('GET_DAILY_JOB_COUNT', takeLatest, 'list', 'job/jobs/daily-count/', 'application/json')(),
 
     // Analytics Module Sagas
-    SAGA('GET_ANALYTICS_SUMMARY', takeLatest, 'list', 'job/analytics/summary/', 'application/json')(),
-    SAGA('GET_CHANNEL_PERFORMANCE', takeLatest, 'list', 'job/analytics/channels/', 'application/json')(),
-    SAGA('GET_TECH_DEMAND', takeLatest, 'list', 'job/analytics/tech-demand/', 'application/json')(),
-    SAGA('GET_APPLICATION_VELOCITY', takeLatest, 'list', 'job/analytics/velocity/', 'application/json')(),
-    SAGA('GET_GHOSTING_ANALYSIS', takeLatest, 'list', 'job/analytics/ghosting/', 'application/json')(),
+    SAGA('GET_ANALYTICS_SUMMARY', takeLatest, 'list', 'job/jobs/summary/', 'application/json')(),
+    SAGA('GET_CHANNEL_PERFORMANCE', takeLatest, 'list', 'job/jobs/channels/', 'application/json')(),
+    SAGA('GET_TECH_DEMAND', takeLatest, 'list', 'job/jobs/tech-demand/', 'application/json')(),
+    SAGA('GET_APPLICATION_VELOCITY', takeLatest, 'list', 'job/jobs/velocity/', 'application/json')(),
+    SAGA('GET_GHOSTING_ANALYSIS', takeLatest, 'list', 'job/jobs/ghosting/', 'application/json')(),
+    SAGA('GET_STATUS_TRENDS', takeLatest, 'list', 'job/jobs/status-trends/', 'application/json')(),
 
     // Tech Proficiency Tracker Sagas
     SAGA('GET_TECH_PROFICIENCY', takeLatest, 'list', 'user/tech-tracker/', 'application/json')(),

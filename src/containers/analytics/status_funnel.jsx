@@ -1,3 +1,5 @@
+import { JOB_STATUS } from '../../utils/constants';
+
 function StatusFunnel({ data, ghosting }) {
     if (!data || !data.status_breakdown) {
         return (
@@ -11,37 +13,16 @@ function StatusFunnel({ data, ghosting }) {
         );
     }
 
-    const statusLabels = {
-        'IG': 'Ignored',
-        'NA': 'Not Applied',
-        'AF': 'Applied',
-        'CR': 'Call Received',
-        'IS': 'Interview Scheduled',
-        'RP': 'Response Pending',
-        'NE': 'Negotiating',
-        'RE': 'Rejected',
-        'OR': 'Offer Received',
-    };
-
-    const statusColors = {
-        'IG': 'secondary',
-        'NA': 'warning',
-        'AF': 'info',
-        'CR': 'primary',
-        'IS': 'success',
-        'RP': 'info',
-        'NE': 'warning',
-        'RE': 'danger',
-        'OR': 'success',
-    };
-
     const breakdown = Object.entries(data.status_breakdown || {})
-        .map(([code, count]) => ({
-            code,
-            label: statusLabels[code] || code,
-            count,
-            color: statusColors[code] || 'secondary',
-        }))
+        .map(([code, count]) => {
+            const statusConfig = JOB_STATUS[code] || { text: code, bgColor: 'secondary' };
+            return {
+                code,
+                label: statusConfig.text,
+                count,
+                color: statusConfig.bgColor,
+            };
+        })
         .filter(item => item.count > 0)
         .sort((a, b) => b.count - a.count);
 

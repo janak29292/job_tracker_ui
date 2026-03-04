@@ -5,6 +5,7 @@ import ChannelAnalysis from './channel_analysis';
 import TechDemand from './tech_demand';
 import StatusFunnel from './status_funnel';
 import ApplicationVelocity from './velocity_tracker';
+import StatusTrends from './status_trends';
 
 function AnalyticsDashboard() {
     const dispatch = useDispatch();
@@ -36,28 +37,29 @@ function AnalyticsDashboard() {
             {/* Metrics Cards */}
             <MetricsCards data={analyticsSummary} />
 
+            {/* Status Trends Chart */}
             <div className="row mt-4">
-                {/* Channel Performance */}
-                <div className="col-lg-6 mb-4">
-                    <ChannelAnalysis data={channelPerformance} />
-                </div>
-
-                {/* Tech Stack Demand */}
-                <div className="col-lg-6 mb-4">
-                    <TechDemand data={techDemand} />
-                </div>
-            </div>
-
-            <div className="row mt-2">
                 {/* Application Velocity */}
                 <div className="col-lg-6 mb-4">
                     <ApplicationVelocity data={velocity} />
+                </div>
+                <div className="col-lg-6 mb-4">
+                    <StatusTrends />
+                </div>
+                {/* Channel Performance */}
+                <div className="col-lg-6 mb-4">
+                    <ChannelAnalysis data={channelPerformance} />
                 </div>
 
                 {/* Status Funnel */}
                 <div className="col-lg-6 mb-4">
                     <StatusFunnel data={analyticsSummary} ghosting={ghosting} />
                 </div>
+                {/* Tech Stack Demand */}
+                <div className="col-lg-6 mb-4">
+                    <TechDemand data={techDemand} />
+                </div>
+
             </div>
         </div>
     );

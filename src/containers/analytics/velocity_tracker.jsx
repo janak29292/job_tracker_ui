@@ -76,15 +76,16 @@ function ApplicationVelocity({ data }) {
                                 </thead>
                                 <tbody>
                                     {data.daily_breakdown.slice(0, 7).map((day, index) => (
-                                        <tr key={index}>
+                                        <tr key={index} className={day.applications === null ? 'text-muted' : ''}>
                                             <td>{new Date(day.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })}</td>
-                                            <td className="text-center">{day.applications}</td>
+                                            <td className="text-center">{day.applications !== null ? day.applications : '–'}</td>
                                             <td className="text-center">{day.target}</td>
                                             <td className="text-center">
-                                                {day.applications >= day.target ?
-                                                    <i className="bi bi-check-circle-fill text-success"></i> :
-                                                    <i className="bi bi-x-circle-fill text-danger"></i>
-                                                }
+                                                {day.applications !== null ? (
+                                                    day.applications >= day.target ?
+                                                        <i className="bi bi-check-circle-fill text-success"></i> :
+                                                        <i className="bi bi-x-circle-fill text-danger"></i>
+                                                ) : null}
                                             </td>
                                         </tr>
                                     ))}

@@ -17,6 +17,7 @@ export default combineReducers({
   techDemand: reducer('GET_TECH_DEMAND'),
   applicationVelocity: reducer('GET_APPLICATION_VELOCITY'),
   ghostingAnalysis: reducer('GET_GHOSTING_ANALYSIS'),
+  statusTrends: reducer('GET_STATUS_TRENDS'),
 
   // Tech Proficiency Tracker Module
   techProficiencyList: reducer('GET_TECH_PROFICIENCY'),

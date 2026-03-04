@@ -1,3 +1,5 @@
+import { PLATFORMS } from '../../utils/constants';
+
 function ChannelAnalysis({ data }) {
     if (!data || !data.channels) {
         return (
@@ -11,14 +13,12 @@ function ChannelAnalysis({ data }) {
         );
     }
 
-    const getChannelColor = (channel) => {
-        const colors = {
-            'LinkedIn': 'primary',
-            'Naukri': 'success',
-            'Direct': 'warning',
-            'Referral': 'danger',
-        };
-        return colors[channel] || 'secondary';
+    const getChannelDisplay = (channelCode) => {
+        return PLATFORMS[channelCode]?.name || channelCode;
+    };
+
+    const getChannelColor = (channelCode) => {
+        return PLATFORMS[channelCode]?.color || 'secondary';
     };
 
     return (
@@ -37,7 +37,8 @@ function ChannelAnalysis({ data }) {
                                 <th>Channel</th>
                                 <th className="text-center">Applications</th>
                                 <th className="text-center">Responses</th>
-                                <th className="text-center">Rate</th>
+                                <th className="text-center">Interviews</th>
+                                <th className="text-center">Response Rate</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,11 +46,12 @@ function ChannelAnalysis({ data }) {
                                 <tr key={index}>
                                     <td>
                                         <span className={`badge bg-${getChannelColor(channel.name)} me-2`}>
-                                            {channel.name}
+                                            {getChannelDisplay(channel.name)}
                                         </span>
                                     </td>
                                     <td className="text-center">{channel.applications}</td>
                                     <td className="text-center">{channel.responses}</td>
+                                    <td className="text-center">{channel.interviews}</td>
                                     <td className="text-center">
                                         <strong>{channel.response_rate.toFixed(1)}%</strong>
                                     </td>
@@ -64,9 +66,9 @@ function ChannelAnalysis({ data }) {
                     <div className="alert alert-info mt-3 mb-0">
                         <i className="bi bi-info-circle me-2"></i>
                         <strong>Best Channel:</strong> {
-                            data.channels.reduce((best, current) =>
+                            getChannelDisplay(data.channels.reduce((best, current) =>
                                 current.response_rate > best.response_rate ? current : best
-                            ).name
+                            ).name)
                         } with {
                             data.channels.reduce((best, current) =>
                                 current.response_rate > best.response_rate ? current : best
