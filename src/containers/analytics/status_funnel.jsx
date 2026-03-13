@@ -1,7 +1,7 @@
 import { JOB_STATUS } from '../../utils/constants';
 
 function StatusFunnel({ data, ghosting }) {
-    if (!data || !data.status_breakdown) {
+    if (!ghosting || !ghosting.status_breakdown) {
         return (
             <div className="card h-100">
                 <div className="card-body text-center">
@@ -13,11 +13,11 @@ function StatusFunnel({ data, ghosting }) {
         );
     }
 
-    const breakdown = Object.entries(data.status_breakdown || {})
-        .map(([code, count]) => {
-            const statusConfig = JOB_STATUS[code] || { text: code, bgColor: 'secondary' };
+    const breakdown = (ghosting.status_breakdown || [])
+        .map(({ status, count }) => {
+            const statusConfig = JOB_STATUS[status] || { text: status, bgColor: 'secondary' };
             return {
-                code,
+                code: status,
                 label: statusConfig.text,
                 count,
                 color: statusConfig.bgColor,

@@ -1,5 +1,7 @@
 // export const url = 'https://ec2-3-106-166-32.ap-southeast-2.compute.amazonaws.com/api/'
-export const url = 'http://localhost:8000/'
+// export const url = 'http://localhost:8000/'
+// export const url = 'http://192.168.1.103:8000/'
+export const url = `http://${window.location.hostname}:8000/`;
 export const JOB_STATUS = {
     IG: {
         text: "Ignored",
@@ -18,7 +20,7 @@ export const JOB_STATUS = {
         options: ['NA', 'AF', 'CR', 'IS', 'RP', 'NE', 'RE', 'OR', 'AC']
     },
     AF: {
-        text: "Applied",
+        text: "Applied For",
         bgColor: "info",
         hexColor: "#0dcaf0",
         chartColor: "#3b82f6",

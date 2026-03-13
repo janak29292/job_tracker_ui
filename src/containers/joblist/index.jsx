@@ -36,9 +36,10 @@ function JobList() {
 
     const getFilteredJobs = (key, value) => {
         console.log("filtered")
-        // console.log({[key]: value})
-        // console.log(nextParams)
-        const updatedParams = { ...nextParams, ...{ [key]: value }, ...{ cursor: [] } }
+        console.log({ [key]: value })
+        console.log(nextParams)
+        const updatedParams = value ? { [key]: value, ordering: jobFilters.ordering, cursor: [] } : { ...jobFilters, cursor: [] }
+        console.log(updatedParams);
         setNextParams(updatedParams)
         setJobs([])
         dispatch({
@@ -63,7 +64,10 @@ function JobList() {
         if (jobList?.data?.status === 'success') {
             setJobs([...jobs, ...jobList.data.body.results]);
             setLoading(false);
-            setNextParams(jobList.data.body.next_param_object)
+            setNextParams({
+                ...jobList.data.body.current_param_object,
+                cursor: jobList.data.body.next_param_object ? [jobList.data.body.next_param_object.cursor] : []
+            })
             setHasMore(!!jobList.data.body.next);
         } else if (jobList?.changingStatus !== 'ongoing') {
             if (jobList?.changingStatus === 'netFailed') {
