@@ -71,10 +71,9 @@ function UnstructuredTab() {
     return (
         <div className="card mt-3">
             <div className="card-header bg-white d-flex justify-content-between align-items-center">
-                <h5 className="mb-0">
-                    <i className="bi bi-journal-text me-2"></i>
-                    Unstructured Notes
-                </h5>
+                <div className="flex-grow-1 me-3">
+                    <input type="text" className="form-control" placeholder="Search notes..." />
+                </div>
                 <button
                     className="btn btn-sm btn-primary"
                     onClick={() => setIsAddingRoot(!isAddingRoot)}

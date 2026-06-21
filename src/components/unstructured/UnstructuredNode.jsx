@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
+import hljs from 'highlight.js/lib/common';
+import '../../styles/hljs-dark-2026.css';
 
 function UnstructuredNode({ node, level = 0, onAddChild, onUpdate, onDelete }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -10,6 +12,15 @@ function UnstructuredNode({ node, level = 0, onAddChild, onUpdate, onDelete }) {
     const [newChildInfo, setNewChildInfo] = useState('');
     const [isOpen, setIsOpen] = useState(false); // Default to open
     const [isCopied, setIsCopied] = useState(false);
+    const contentRef = useRef(null);
+
+    useEffect(() => {
+        if (contentRef.current) {
+            contentRef.current.querySelectorAll('pre').forEach(block => {
+                hljs.highlightElement(block);
+            });
+        }
+    }, [node.info, isEditing]);
 
     const handleCopy = async () => {
         try {
@@ -93,8 +104,8 @@ function UnstructuredNode({ node, level = 0, onAddChild, onUpdate, onDelete }) {
                         </div>
 
                         {/* Rich Text Content */}
-                        <div className="flex-grow-1 min-w-0 pb-1" style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-                            <div className="quill-content" dangerouslySetInnerHTML={{ __html: node.info }} />
+                        <div className="flex-grow-1 min-w-0 pb-1" style={{ overflowWrap: 'break-word', overflow: 'hidden' }} ref={contentRef}>
+                            <div className="quill-content" dangerouslySetInnerHTML={{ __html: node.info?.replace(/&nbsp;/g, ' ') }} />
                         </div>
 
                         {/* Hover Actions Menu */}
@@ -196,10 +207,10 @@ style.textContent = `
     .hover-dark:hover { color: #000 !important; opacity: 1 !important; }
     
     /* Clean Quill Content Resets */
-    .quill-content { font-size: 0.95rem; line-height: 1.5; color: #333; }
+    .quill-content { font-size: 0.95rem; line-height: 1.5; color: #333; overflow-wrap: break-word; }
     .quill-content p { margin-bottom: 0.35rem; }
     .quill-content p:last-child { margin-bottom: 0; }
-    .quill-content pre { padding: 8px 12px; border-radius: 6px; background: #f8f9fa; border: 1px solid #e9ecef; font-size: 0.85em; margin-top: 8px; margin-bottom: 8px;}
+    .quill-content pre { padding: 8px 12px; border-radius: 6px; background: #1e1e1e; color: #d4d4d4; border: 1px solid #333; font-size: 0.85em; margin-top: 8px; margin-bottom: 8px; white-space: pre; max-width: 100%; overflow-x: auto; }
     .quill-content blockquote { border-left: 3px solid #ced4da; padding-left: 12px; color: #6c757d; margin: 6px 0; }
     .quill-content ul, .quill-content ol { padding-left: 1.5rem; margin-bottom: 0.35rem; }
 `;

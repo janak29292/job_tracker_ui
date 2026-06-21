@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DSAPatterns from './dsa_patterns';
-import UnstructuredTab from './unstructured_tab';
 
 function InterviewPrep() {
     const dispatch = useDispatch();
@@ -33,20 +32,10 @@ function InterviewPrep() {
                         DSA Patterns
                     </button>
                 </li>
-                <li className="nav-item">
-                    <button
-                        className={`nav-link ${activeTab === 'unstructured' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('unstructured')}
-                    >
-                        <i className="bi bi-journal-text me-2"></i>
-                        Unstructured Notes
-                    </button>
-                </li>
             </ul>
 
             {/* Tab Content */}
             {activeTab === 'patterns' && <DSAPatterns categoryList={categoryResponse || []} />}
-            {activeTab === 'unstructured' && <UnstructuredTab />}
         </div>
     );
 }

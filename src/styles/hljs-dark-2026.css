@@ -1,0 +1,122 @@
+/*
+ * VS Code "Dark 2026" theme for highlight.js
+ * Based on the default VS Code 1.113+ color theme
+ */
+
+.hljs {
+  background: #1e1e1e;
+  color: #d4d4d4;
+}
+
+/* Comments */
+.hljs-comment,
+.hljs-quote {
+  color: #6a9955;
+  font-style: italic;
+}
+
+/* Strings */
+.hljs-string,
+.hljs-template-tag,
+.hljs-template-variable {
+  color: #a5d6ff;
+}
+
+/* Keywords & control flow */
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #c586c0;
+}
+
+/* Functions & method names */
+.hljs-title,
+.hljs-title.function_ {
+  color: #d2a8ff;
+}
+
+/* Parameters & variables */
+.hljs-variable,
+.hljs-params {
+  color: #ffa657;
+}
+
+/* Numbers & constants */
+.hljs-number,
+.hljs-literal {
+  color: #79c0ff;
+}
+
+/* Types & classes */
+.hljs-type,
+.hljs-title.class_ {
+  color: #7ee787;
+}
+
+/* Built-in & special */
+.hljs-built_in {
+  color: #ffa657;
+}
+
+/* Attributes & properties */
+.hljs-attr,
+.hljs-attribute {
+  color: #79c0ff;
+}
+
+/* Operators & punctuation */
+.hljs-operator,
+.hljs-punctuation {
+  color: #d4d4d4;
+}
+
+/* Tags (HTML/XML) */
+.hljs-name,
+.hljs-tag {
+  color: #7ee787;
+}
+
+/* Meta / preprocessor */
+.hljs-meta,
+.hljs-meta .hljs-keyword {
+  color: #ffa657;
+}
+
+/* Regex */
+.hljs-regexp {
+  color: #a5d6ff;
+}
+
+/* Symbols */
+.hljs-symbol {
+  color: #79c0ff;
+}
+
+/* Deletion / Addition (diffs) */
+.hljs-deletion {
+  color: #ffa198;
+  background: rgba(255, 161, 152, 0.1);
+}
+.hljs-addition {
+  color: #7ee787;
+  background: rgba(126, 231, 135, 0.1);
+}
+
+/* Section headers */
+.hljs-section {
+  color: #d2a8ff;
+  font-weight: bold;
+}
+
+/* Emphasis & strong */
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-strong {
+  font-weight: bold;
+}
+
+/* Selection */
+.hljs::selection,
+.hljs ::selection {
+  background: #264f78;
+}
