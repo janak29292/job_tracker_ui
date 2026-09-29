@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
-import { JOB_STATUS, JOB_STATUS_EXCLUDE } from "../../utils/constants";
+import { JOB_STATUS, JOB_STATUS_EXCLUDE, PLATFORMS } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -41,7 +41,13 @@ function JobFilter() {
         console.log("RESETTING")
         const currentFilters = {
             status__not__in: JOB_STATUS_EXCLUDE,
-            ordering: '-last_posted'
+            ordering: '-last_posted',
+            status__in: [],
+            experience_min__gte: "",
+            experience_max__lte: "",
+            platform: "",
+            tech_stacks: [],
+            id__in: ""
         }
         setFilters(currentFilters)
         setJobFilters(currentFilters)
@@ -102,6 +108,17 @@ function JobFilter() {
                             <label class="form-label fw-semibold">Search</label>
                             <input type="text" class="form-control" placeholder="Search jobs..."></input>
                         </div> */}
+
+                        <div>
+                            <label class="form-label fw-semibold">Job IDs</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="e.g. 81, 82, 83" 
+                                value={filters.id__in || ""}
+                                onChange={(e) => addFilter('id__in', e.target.value)}
+                            />
+                        </div>
 
                         <div>
                             {/* <label class="form-label fw-semibold">Tech Stack</label> */}
@@ -174,14 +191,24 @@ function JobFilter() {
                         </div>
 
                         <div>
+                            <label class="form-label fw-semibold">Platform</label>
+                            <select class="form-select" value={filters.platform || ''} onChange={e => addFilter('platform', e.target.value)}>
+                                <option value="">All Platforms</option>
+                                {Object.keys(PLATFORMS).map((key) => (
+                                    <option key={key} value={key}>{PLATFORMS[key].name}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div>
                             <label class="form-label fw-semibold">Experience Range</label>
                             <div class="row g-2">
                                 <div class="col-6">
-                                    <input onChange={e => addFilter('experience_min__gte', e.target.value)} type="number" class="form-control" placeholder="Min" min="0"></input>
+                                    <input value={filters.experience_min__gte || ''} onChange={e => addFilter('experience_min__gte', e.target.value)} type="number" class="form-control" placeholder="Min" min="0"></input>
                                     <small class="text-muted">Min years</small>
                                 </div>
                                 <div class="col-6">
-                                    <input onChange={e => addFilter('experience_max__lte', e.target.value)} type="number" class="form-control" placeholder="Max" min="0"></input>
+                                    <input value={filters.experience_max__lte || ''} onChange={e => addFilter('experience_max__lte', e.target.value)} type="number" class="form-control" placeholder="Max" min="0"></input>
                                     <small class="text-muted">Max years</small>
                                 </div>
                             </div>
@@ -191,6 +218,8 @@ function JobFilter() {
                         <div>
                             <label class="form-label fw-semibold">Sort By</label>
                             <select class="form-select" value={filters.ordering || ''} onChange={e => addFilter('ordering', e.target.value)}>
+                                <option value="-latest_match_score" >Match % - High to Low</option>
+                                <option value="latest_match_score" >Match % - Low to High</option>
                                 <option value="id" >ID - ascending</option>
                                 <option value="-id" >ID - descending</option>
                                 <option value="company" >Company - ascending</option>

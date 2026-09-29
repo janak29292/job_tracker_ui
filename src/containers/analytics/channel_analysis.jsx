@@ -1,3 +1,4 @@
+import Spinner from "../../components/common/spinner";
 import { PLATFORMS } from '../../utils/constants';
 
 function ChannelAnalysis({ data }) {
@@ -5,9 +6,7 @@ function ChannelAnalysis({ data }) {
         return (
             <div className="card h-100">
                 <div className="card-body text-center">
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
+                    <Spinner />
                 </div>
             </div>
         );

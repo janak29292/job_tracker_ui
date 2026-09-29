@@ -7,9 +7,20 @@ export default combineReducers({
   // toastr,
   jobList: reducer('GET_JOB_LIST'),
   jobDetails: reducer('PATCH_JOB'),
+  jobMatchHistory: reducer('GET_JOB_MATCH_HISTORY'),
   techStackList: reducer('GET_TECHSTACK_LIST'),
+  techContext: reducer('GET_TECH_CONTEXT'),
+  deleteTechStackItem: reducer('DELETE_TECHSTACK_ITEM'),
   postingList: reducer('GET_POSTING_LIST'),
   dailyJobCount: reducer('GET_DAILY_JOB_COUNT'),
+
+  applicationRuns: reducer('GET_APPLICATION_RUNS'),
+  approveApplication: reducer('APPROVE_APPLICATION'),
+  rejectApplication: reducer('REJECT_APPLICATION'),
+
+  // Unknown Techs Module
+  unknownTechsList: reducer('GET_UNKNOWN_TECHS'),
+  unknownTechsAction: multiReducer('ACTION_UNKNOWN_TECH', 'ADD_TO_JOBS_UNKNOWN_TECHS'),
 
   // Analytics Module
   analyticsSummary: reducer('GET_ANALYTICS_SUMMARY'),
@@ -46,4 +57,19 @@ export default combineReducers({
   updateAnswer: reducer('UPDATE_ANSWER'),
   deleteAnswer: reducer('DELETE_ANSWER'),
   trackPractice: reducer('TRACK_PRACTICE'),
+
+  // Applicant Automation Module
+  applicantProfile: multiReducer('GET_PROFILE', 'UPDATE_PROFILE', 'CREATE_PROFILE'),
+  workExperience: multiReducer('ADD_EXPERIENCE', 'UPDATE_EXPERIENCE', 'DELETE_EXPERIENCE'),
+  education: multiReducer('ADD_EDUCATION', 'UPDATE_EDUCATION', 'DELETE_EDUCATION'),
+  project: multiReducer('ADD_PROJECT', 'UPDATE_PROJECT', 'DELETE_PROJECT'),
+  dealbreaker: multiReducer('GET_DEALBREAKER', 'ADD_DEALBREAKER', 'UPDATE_DEALBREAKER', 'DELETE_DEALBREAKER'),
+  qaQuestion: multiReducer('GET_QUESTION', 'ADD_QUESTION', 'UPDATE_QUESTION', 'DELETE_QUESTION'),
+  qaAnswer: multiReducer('ADD_QA_ANSWER', 'UPDATE_QA_ANSWER', 'DELETE_QA_ANSWER'),
+
+  // Auto-Apply Review Module
+  applicationRuns: reducer('GET_APPLICATION_RUNS'),
+  pendingReviews: reducer('GET_PENDING_REVIEWS'),
+  approveApplication: reducer('APPROVE_APPLICATION'),
+  rejectApplication: reducer('REJECT_APPLICATION'),
 })

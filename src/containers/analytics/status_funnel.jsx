@@ -1,3 +1,4 @@
+import Spinner from "../../components/common/spinner";
 import { JOB_STATUS } from '../../utils/constants';
 
 function StatusFunnel({ data, ghosting }) {
@@ -5,9 +6,7 @@ function StatusFunnel({ data, ghosting }) {
         return (
             <div className="card h-100">
                 <div className="card-body text-center">
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
+                    <Spinner />
                 </div>
             </div>
         );

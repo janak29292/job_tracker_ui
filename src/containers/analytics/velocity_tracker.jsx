@@ -1,11 +1,11 @@
+import Spinner from "../../components/common/spinner";
+
 function ApplicationVelocity({ data }) {
     if (!data) {
         return (
             <div className="card h-100">
                 <div className="card-body text-center">
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
+                    <Spinner />
                 </div>
             </div>
         );

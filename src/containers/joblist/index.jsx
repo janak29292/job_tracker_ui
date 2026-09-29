@@ -1,6 +1,6 @@
 // import InfiniteScroll from "react-infinite-scroll-component";
 import { toast } from "react-toastify";
-import Spinner from "../../components/spinner";
+import Spinner from "../../components/common/spinner";
 import JobCard from "./job_card";
 import JobFilter from "./joblist_filter";
 import { useCallback, useEffect, useRef, useState } from "react";

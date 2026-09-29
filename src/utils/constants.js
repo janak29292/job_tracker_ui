@@ -17,7 +17,23 @@ export const JOB_STATUS = {
         hexColor: "#ffc107",
         chartColor: "#f59e0b",
         color: "dark",
-        options: ['NA', 'AF', 'CR', 'IS', 'RP', 'NE', 'RE', 'OR', 'AC']
+        options: ['NA', 'MA', 'AF', 'AS', 'CR', 'IS', 'RP', 'NE', 'RE', 'OR', 'AC']
+    },
+    MA: {
+        text: "Matched",
+        bgColor: "info",
+        hexColor: "#0dcaf0",
+        chartColor: "#2dd4bf",
+        color: "dark",
+        options: ['MA', 'AF', 'AS', 'CR', 'IS', 'RP', 'NE', 'RE', 'OR', 'AC']
+    },
+    PR: {
+        text: "Pending Review",
+        bgColor: "warning",
+        hexColor: "#fd7e14",
+        chartColor: "#fb923c",
+        color: "dark",
+        options: ['PR', 'AF', 'NA', 'IG']
     },
     AF: {
         text: "Applied For",
@@ -25,7 +41,15 @@ export const JOB_STATUS = {
         hexColor: "#0dcaf0",
         chartColor: "#3b82f6",
         color: "dark",
-        options: ['AF', 'CR', 'IS', 'RP', 'NE', 'RE', 'OR', 'AC']
+        options: ['AF', 'AS', 'CR', 'IS', 'RP', 'NE', 'RE', 'OR', 'AC']
+    },
+    AS: {
+        text: "Assessment / Take-Home",
+        bgColor: "secondary",
+        hexColor: "#6c757d",
+        chartColor: "#eab308",
+        color: "light",
+        options: ['AS', 'CR', 'IS', 'RP', 'NE', 'RE', 'AC']
     },
     CR: {
         text: "Call Received",

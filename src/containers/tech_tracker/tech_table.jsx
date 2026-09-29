@@ -1,3 +1,4 @@
+import Spinner from "../../components/common/spinner";
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -10,9 +11,7 @@ function TechTable({ technologies, loading }) {
         return (
             <div className="card">
                 <div className="card-body text-center py-5">
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
+                    <Spinner />
                 </div>
             </div>
         );

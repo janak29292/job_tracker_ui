@@ -1,10 +1,10 @@
+import Spinner from "../../components/common/spinner";
+
 function ProblemTracker({ problems }) {
     if (!problems || !problems.problems) {
         return (
             <div className="text-center py-5">
-                <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
+                <Spinner />
             </div>
         );
     }

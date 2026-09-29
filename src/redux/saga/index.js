@@ -7,9 +7,22 @@ export default function* rootSaga() {
     // Existing job tracker sagas
     SAGA('GET_JOB_LIST', takeLatest, 'list', 'job/jobs/', 'application/json')(),
     SAGA('PATCH_JOB', takeLatest, 'patch', 'job/jobs/', 'application/json')(),
+    SAGA('GET_JOB_MATCH_HISTORY', takeLatest, 'list', 'job/job-matches/', 'application/json')(),
     SAGA('GET_TECHSTACK_LIST', takeLatest, 'list', 'job/techs/', 'application/json')(),
+    SAGA('GET_TECH_CONTEXT', takeLatest, 'list', 'job/techs/context/', 'application/json', true)(),
+    SAGA('DELETE_TECHSTACK_ITEM', takeLatest, 'delete', 'job/techs/', 'application/json')(),
     SAGA('GET_POSTING_LIST', takeLatest, 'list', 'job/postings/', 'application/json')(),
     SAGA('GET_DAILY_JOB_COUNT', takeLatest, 'list', 'job/jobs/daily-count/', 'application/json')(),
+
+    // Application Runs
+    SAGA('GET_APPLICATION_RUNS', takeLatest, 'list', 'job/application-runs/', 'application/json', true)(),
+    SAGA('APPROVE_APPLICATION', takeLatest, 'post', 'job/application-runs/:id/approve/', 'application/json', true)(),
+    SAGA('REJECT_APPLICATION', takeLatest, 'post', 'job/application-runs/:id/reject/', 'application/json', true)(),
+
+    // Unknown Tech Curation Sagas
+    SAGA('GET_UNKNOWN_TECHS', takeLatest, 'list', 'job/unknown-techs/', 'application/json')(),
+    SAGA('ACTION_UNKNOWN_TECH', takeLatest, 'post', 'job/unknown-techs/action/', 'application/json')(),
+    SAGA('ADD_TO_JOBS_UNKNOWN_TECHS', takeLatest, 'post', 'job/unknown-techs/add-to-jobs/', 'application/json')(),
 
     // Analytics Module Sagas
     SAGA('GET_ANALYTICS_SUMMARY', takeLatest, 'list', 'job/jobs/summary/', 'application/json')(),
@@ -57,5 +70,48 @@ export default function* rootSaga() {
     SAGA('UPDATE_ANSWER', takeLatest, 'put', 'user/answer-bank/', 'application/json')(),
     SAGA('DELETE_ANSWER', takeLatest, 'delete', 'user/answer-bank/', 'application/json')(),
     SAGA('TRACK_PRACTICE', takeLatest, 'patch', 'user/answer-bank/practice/', 'application/json')(),
+
+    // Applicant Automation Sagas
+    SAGA('GET_PROFILE', takeLatest, 'list', 'user/profile/', 'application/json')(),
+    SAGA('CREATE_PROFILE', takeLatest, 'post', 'user/profile/', 'application/json')(),
+    SAGA('UPDATE_PROFILE', takeLatest, 'patch', 'user/profile/', 'application/json')(),
+    
+    SAGA('ADD_EXPERIENCE', takeLatest, 'post', 'user/experiences/', 'application/json')(),
+    SAGA('UPDATE_EXPERIENCE', takeLatest, 'put', 'user/experiences/', 'application/json')(),
+    SAGA('DELETE_EXPERIENCE', takeLatest, 'delete', 'user/experiences/', 'application/json')(),
+    SAGA('ADD_EXPERIENCE_BULLET', takeLatest, 'post', 'user/bullets/', 'application/json')(),
+    SAGA('EDIT_EXPERIENCE_BULLET', takeLatest, 'patch', 'user/bullets/', 'application/json')(),
+    SAGA('DELETE_EXPERIENCE_BULLET', takeLatest, 'delete', 'user/bullets/', 'application/json')(),
+
+    SAGA('ADD_EDUCATION', takeLatest, 'post', 'user/educations/', 'application/json')(),
+    SAGA('UPDATE_EDUCATION', takeLatest, 'put', 'user/educations/', 'application/json')(),
+    SAGA('DELETE_EDUCATION', takeLatest, 'delete', 'user/educations/', 'application/json')(),
+
+    SAGA('ADD_PROJECT', takeLatest, 'post', 'user/projects/', 'application/json')(),
+    SAGA('UPDATE_PROJECT', takeLatest, 'put', 'user/projects/', 'application/json')(),
+    SAGA('DELETE_PROJECT', takeLatest, 'delete', 'user/projects/', 'application/json')(),
+    SAGA('ADD_PROJECT_BULLET', takeLatest, 'post', 'user/bullets/', 'application/json')(),
+    SAGA('EDIT_PROJECT_BULLET', takeLatest, 'patch', 'user/bullets/', 'application/json')(),
+    SAGA('DELETE_PROJECT_BULLET', takeLatest, 'delete', 'user/bullets/', 'application/json')(),
+
+    SAGA('GET_DEALBREAKER', takeLatest, 'list', 'user/dealbreakers/', 'application/json')(),
+    SAGA('ADD_DEALBREAKER', takeLatest, 'post', 'user/dealbreakers/', 'application/json')(),
+    SAGA('UPDATE_DEALBREAKER', takeLatest, 'patch', 'user/dealbreakers/', 'application/json')(),
+    SAGA('DELETE_DEALBREAKER', takeLatest, 'delete', 'user/dealbreakers/', 'application/json')(),
+
+    SAGA('GET_QUESTION', takeLatest, 'list', 'user/questions/', 'application/json')(),
+    SAGA('ADD_QUESTION', takeLatest, 'post', 'user/questions/', 'application/json')(),
+    SAGA('UPDATE_QUESTION', takeLatest, 'patch', 'user/questions/', 'application/json')(),
+    SAGA('DELETE_QUESTION', takeLatest, 'delete', 'user/questions/', 'application/json')(),
+
+    SAGA('ADD_QA_ANSWER', takeLatest, 'post', 'user/answers/', 'application/json')(),
+    SAGA('UPDATE_QA_ANSWER', takeLatest, 'patch', 'user/answers/', 'application/json')(),
+    SAGA('DELETE_QA_ANSWER', takeLatest, 'delete', 'user/answers/', 'application/json')(),
+
+    // Auto-Apply Review Sagas
+    SAGA('GET_APPLICATION_RUNS', takeLatest, 'list', 'job/application-runs/', 'application/json')(),
+    SAGA('GET_PENDING_REVIEWS', takeLatest, 'list', 'job/application-runs/pending/', 'application/json')(),
+    SAGA('APPROVE_APPLICATION', takeLatest, 'post', 'job/application-runs/', 'application/json')(),
+    SAGA('REJECT_APPLICATION', takeLatest, 'post', 'job/application-runs/', 'application/json')(),
   ])
 }

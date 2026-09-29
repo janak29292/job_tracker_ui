@@ -1,10 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ConfirmIgnoreButton, EditableField, PostingHistoryDropdown } from "../../components/temp";
+import ConfirmIgnoreButton from "../../components/common/ConfirmIgnoreButton";
+import EditableField from "../../components/common/EditableField";
+import PostingHistoryDropdown from "../../components/jobs/PostingHistoryDropdown";
+import StatusDropdown from "../../components/jobs/StatusDropdown";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { JOB_STATUS } from "../../utils/constants";
 import moment from "moment";
 import { useUpdateEffect } from "../../utils/helpers";
+import JobMatchHistory from './job_match_history';
+import ApplicationReviewModal from './application_review';
 
 function JobCard(props) {
     // let job = props.job;
@@ -12,6 +17,8 @@ function JobCard(props) {
     const jobDetails = useSelector(state => state.jobDetails)
 
     const [job, setJob] = useState({ ...props.job });
+    const [showMatches, setShowMatches] = useState(false);
+    const [showReview, setShowReview] = useState(false);
 
     const handlePatch = (column, value) => {
 
@@ -59,12 +66,14 @@ function JobCard(props) {
     //     'white'
 
     return (
-        <div class="accordion-item job-card mb-3">
+        <>
+            <div class="accordion-item job-card mb-3">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#job${job.id}`}>
                     <div class="job-header-content">
                         <div class="row align-items-center w-100">
-                            <div class="col-lg-3 col-md-6 mb-2 mb-lg-0">
+                            {/* Top Row: Original Layout */}
+                            <div class="col-lg-3 col-md-6 mb-2 mb-lg-0 text-start">
                                 <h5 class="mb-1 d-flex align-items-center gap-2">
                                     {job.platform === 'LI' && (
                                         <i className="bi bi-linkedin text-primary" style={{ fontSize: '1rem' }} title="LinkedIn"></i>
@@ -75,6 +84,20 @@ function JobCard(props) {
                                     )}
                                     {job.company}
                                 </h5>
+                                {job.ratings && (
+                                    <div class="mb-1">
+                                        <span class="badge bg-warning text-dark border" style={{ fontSize: '0.75rem' }}>
+                                            <i class="bi bi-star-fill"></i> {job.ratings}
+                                        </span>
+                                    </div>
+                                )}
+                                {job.latest_match_score != null && (
+                                    <div class="mb-1">
+                                        <span class={`badge ${job.latest_decision === 'APPLY' ? 'bg-success text-white' : job.latest_decision === 'REJECT' ? 'bg-danger text-white' : 'bg-warning text-dark'} border`} style={{ fontSize: '0.75rem' }}>
+                                            {job.latest_match_score}% Match
+                                        </span>
+                                    </div>
+                                )}
                                 <p class="text-muted mb-0 small">{job.position}</p>
                             </div>
                             <div class="col-lg-3 col-md-6 mb-2 mb-lg-0">
@@ -84,17 +107,61 @@ function JobCard(props) {
                             </div>
                             <div class="col-lg-3 col-md-6 mb-2 mb-md-0">
                                 <div class="d-flex flex-wrap gap-1">
-                                    {JSON.parse(job.tech_stack_primary).map((tech_stack) => (
-                                        <span class="badge bg-secondary tech-badge">{tech_stack}</span>
+                                    {job.tech_stack_primary && JSON.parse(job.tech_stack_primary).map((tech_stack, i) => (
+                                        <span key={i} class="badge bg-secondary tech-badge">{tech_stack}</span>
                                     ))}
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-4 mb-2 mb-md-0">
                                 <span class={`badge status-badge bg-${JOB_STATUS[job.status].bgColor} text-${JOB_STATUS[job.status].color}`}>{JOB_STATUS[job.status].text}</span>
+                                {job.status === 'PR' && (
+                                    <span className="badge bg-warning text-dark ms-1">
+                                        <i className="bi bi-robot"></i>
+                                    </span>
+                                )}
                             </div>
                             <div class="col-lg-1 col-md-2 text-end">
                                 <PostingHistoryDropdown jobId={job.id} lastPostedDate={job.last_posted} />
                             </div>
+
+                            {/* Middle Row: Full-width Role Summary */}
+                            {job.role_summary && (
+                                <div class="col-12 mt-2 text-start">
+                                    <p class="mb-0 text-secondary" style={{ fontSize: '0.85rem', lineHeight: '1.4', whiteSpace: 'normal' }}>
+                                        {job.role_summary}
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* Extracted Fields (New Layout) */}
+                            {(job.role_title || job.tech_stack_primary_new) && (
+                                <>
+                                    <div class="col-12">
+                                        <hr class="my-2 text-muted" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 mb-2 mb-lg-0 text-start">
+                                        {job.role_title && (
+                                            <p class="text-muted mb-1 small">{job.role_title}</p>
+                                        )}
+                                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                                            {job.seniority_level && <span class="badge bg-light text-secondary border">{job.seniority_level}</span>}
+                                            {job.role_category && <span class="badge bg-light text-secondary border">{job.role_category}</span>}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 mb-2 mb-lg-0">
+                                        {/* Spacer to align with location column */}
+                                    </div>
+                                    <div class="col-lg-6 col-md-12 mb-2 mb-md-0 text-start">
+                                        {job.tech_stack_primary_new && (
+                                            <div class="d-flex flex-wrap gap-1">
+                                                {JSON.parse(job.tech_stack_primary_new).map((tech_stack, i) => (
+                                                    <span key={i} class="badge bg-secondary tech-badge">{tech_stack}</span>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </button>
@@ -137,12 +204,10 @@ function JobCard(props) {
 
 
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Status</label>
-                            <select class="form-select form-select-sm" value={job.status} onChange={e => handlePatch('status', e.target.value)}>
-                                {JOB_STATUS[job.status].options.map((status) => (
-                                    <option value={status}>{JOB_STATUS[status].text}</option>
-                                ))}
-                            </select>
+                            <StatusDropdown
+                                currentStatus={job.status}
+                                onSave={(val) => handlePatch('status', val)}
+                            />
                         </div>
 
                         <div class="col-md-3">
@@ -192,10 +257,20 @@ function JobCard(props) {
                         <div class="col-12">
                             <label class="form-label fw-bold">All Technologies</label>
                             <div class="d-flex flex-wrap gap-1">
-                                {JSON.parse(job.tech_stack_all).map((tech_stack) => (
-                                    <span class="badge bg-info">{tech_stack}</span>
+                                {job.tech_stack_all && JSON.parse(job.tech_stack_all).map((tech_stack, i) => (
+                                    <span key={i} class="badge bg-info">{tech_stack}</span>
                                 ))}
                             </div>
+                            {job.tech_stack_all_new && (
+                                <>
+                                    <hr class="my-2 text-muted" />
+                                    <div class="d-flex flex-wrap gap-1">
+                                        {JSON.parse(job.tech_stack_all_new).map((tech_stack, i) => (
+                                            <span key={`new-${i}`} class="badge bg-info">{tech_stack}</span>
+                                        ))}
+                                    </div>
+                                </>
+                            )}
                         </div>
 
                         <div class="col-12">
@@ -205,13 +280,33 @@ function JobCard(props) {
                                     class="btn btn-primary">
                                     <i class="bi bi-box-arrow-up-right"></i> Apply
                                 </a>
+                                {job.status === 'PR' && (
+                                    <button
+                                        className="btn btn-warning"
+                                        onClick={() => setShowReview(true)}
+                                    >
+                                        <i className="bi bi-robot me-1"></i>
+                                        Review Application
+                                    </button>
+                                )}
                                 <ConfirmIgnoreButton
                                     onConfirm={() => handlePatch('status', 'IG')}
                                 />
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 mt-2">
+                            <button className="btn btn-outline-primary btn-sm" onClick={() => setShowMatches(!showMatches)}>
+                                {showMatches ? 'Hide Matches' : 'Show Matches'}
+                            </button>
+                        </div>
+                        {showMatches && (
+                            <div className="col-12 mt-2">
+                                <JobMatchHistory jobId={job.id} />
+                            </div>
+                        )}
+
+                        <div class="col-12 mt-3">
                             <label class="form-label fw-bold">Job Description</label>
                             <div class="card">
                                 <div class="card-body">
@@ -227,6 +322,24 @@ function JobCard(props) {
                 </div>
             </div>
         </div>
+
+        {/* Application Review Modal */}
+        {showReview && (
+            <ApplicationReviewModal
+                jobId={job.id}
+                onClose={() => setShowReview(false)}
+                onAction={(result) => {
+                    // Update local card state immediately
+                    if (result === 'approved') {
+                        setJob({ ...job, status: 'AF' });
+                    } else if (result === 'rejected') {
+                        setJob({ ...job, status: 'MA' });
+                    }
+                    setShowReview(false);
+                }}
+            />
+        )}
+        </>
     );
 }
 

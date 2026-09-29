@@ -2,9 +2,11 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import JobList from "../containers/joblist";
 import AnalyticsDashboard from "../containers/analytics";
 import TechTracker from "../containers/tech_tracker";
+import CanonicalTechManager from "../containers/canonical_tech";
 import InterviewPrep from "../containers/interview_prep";
 import AnswerBank from "../containers/answer_bank";
-import Header from "../components/header";
+import ProfileContainer from "../containers/profile";
+import Header from "../components/common/header";
 
 // Inner component that has access to useLocation
 const AppRoutes = () => {
@@ -23,8 +25,10 @@ const AppRoutes = () => {
         <Routes>
           <Route path="/analytics" element={<AnalyticsDashboard />} />
           <Route path="/tech-tracker" element={<TechTracker />} />
+          <Route path="/canonical-techs" element={<CanonicalTechManager />} />
           <Route path="/interview-prep" element={<InterviewPrep />} />
           <Route path="/answer-bank" element={<AnswerBank />} />
+          <Route path="/profile" element={<ProfileContainer />} />
         </Routes>
       )}
     </>

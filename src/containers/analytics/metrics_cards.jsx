@@ -1,11 +1,11 @@
+import Spinner from "../../components/common/spinner";
+
 function MetricsCards({ data }) {
     if (!data) {
         return (
             <div className="row">
                 <div className="col-12 text-center py-4">
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
+                    <Spinner />
                 </div>
             </div>
         );

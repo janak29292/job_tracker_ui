@@ -1,3 +1,4 @@
+import Spinner from "../../components/common/spinner";
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PatternForm from './pattern_form';
@@ -123,9 +124,7 @@ function DSAPatterns({ categoryList }) {
     if (!categories.length && !categories) {
         return (
             <div className="text-center py-5">
-                <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
+                <Spinner />
             </div>
         );
     }

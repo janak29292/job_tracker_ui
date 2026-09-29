@@ -1,3 +1,4 @@
+import Spinner from "../../components/common/spinner";
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -182,9 +183,7 @@ function StatusTrends() {
                 <div style={{ width: '100%', height: 320 }}>
                     {isLoading ? (
                         <div className="d-flex justify-content-center align-items-center h-100">
-                            <div className="spinner-border text-primary" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
+                            <Spinner />
                         </div>
                     ) : chartData.length === 0 ? (
                         <div className="d-flex justify-content-center align-items-center h-100 text-muted">

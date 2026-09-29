@@ -25,6 +25,9 @@ export default actionName => function reducer(
         data: action.payload
       }
     }
+    case `${actionName}_CLEAR`: {
+      return { data: null, changingStatus: null }
+    }
     default: {
       return state
     }
